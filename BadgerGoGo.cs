@@ -2,18 +2,19 @@ using System.Collections.Generic;
 using IOStream;
 using System;
 
-class Game{
+public class Game{
     static int Main(){
         Game game = new Game();
+        Alias a = new Alias();
         game.RealMain();
 
-        System.Console.WriteLine("closing");
+        System.Console.WriteLine("--------CLOSING GAME------");
         System.Console.Read();
         return 0;
     }
 
     private List<Room> rooms;
-    private Room room;
+    public Room room;
     OutStream o;
     InStream i;
 
@@ -33,33 +34,99 @@ class Game{
         //main loop
         while(true){
             input = +i;
-            if(input == "no")
+            input = input.ToLower();
+
+            if(Alias.reduce(input) == "no")
                 break;
+
             splitI = input.Split(' ');
-            if()
+
+            if(input == "help"){
+                o += "\nUse [look] or [inspect] to look at objects or the room," +
+                "\nUse [exit] to close the game" +
+                "\nIt is possible to consume things";
+                continue;
+            }
+
+            if(splitI.Length > 0 && Alias.reduce(splitI[0]) == "look"){
+                if(splitI.Length == 1 || splitI[1] == "around")
+                    o += room.description;
+                else
+                    o += room.look(splitI[1]);
+            }
+            else if(splitI.Length == 2 && room.check(splitI))
+                o += "";
+            else
+                o += "\nInvalid Input, use [help] to get help";
         }
         return 0;
     }
 
     private void setup(){
         o += 
-        "\nYou lay destitude in your grungy cell," +
-        "\nimprisoned by a pack of hariless apes." +
-        "\nTheir putrid stench coats the air of this humiliating prison.";
+        "\nYou lay destitude in a grungy cell," +
+        "\nImprisoned by a pack of hariless apes" +
+        "\nTheir putrid stench coats the air of this humiliating prison" +
+        "\nOnce a king amongst badgers, you were caught off guard by these ingrates" +
+        "\nYou thirst for vangence";
 
-        room = new Room();
-        room.description =
-        "\nSome terrifying illness seems to have convinced these hindwalkers that they could contain you."+
-        "\nTo their credit, three of the walls surrounding you are formed of rock." +
-        "\nThe remaining wall, to the east, is of glass." +
+    //room definitions
+        Room r = new Room();
+        r.description =
+        "\nSome terrifying illness seems to have convinced these hindwalkers that they could contain you"+
+        "\nTo their credit, three of the walls surrounding you are formed of rock" +
+        "\nThe remaining wall, to the east, is a rusty wire fence" +
         "\nYour captors have left you with a small bowl of water";
+        rooms.Add(r);
+        room = r;
 
+        r = new Room();
+        r.description = "\nYou stand atop a stone path running north to south" +
+        "\nto the south lie more cages, the north holds a building and noises of man" +
+        "\nAlong the path are several thistles";
+        rooms.Add(r);
+
+
+    //starting cage
         Actable a = new Actable("bowl");
-        a.AddAction(new Act("eat", "You scronch down the poor bowl," +
-        "\ncold metal nuroushing your ample frame." +
-        "\nthe water, once held, now damprns the muddy ground." +
-        "\nthis was lethargic."));
-        room.actables.Add(a);
-        rooms.Add(room);
+        a.description = 
+        "\nThe small metal bowl holds a measly amount of old water," +
+        "\nIts presence is an insult";
+        a.AddAction(new Eat("\nYou scronch down the poor bowl" +
+        "\nCold metal nuroushing your ample frame" +
+        "\nThe water, once held, now dampens the muddy ground" +
+        "\nThis was lethargic"));
+        rooms[0].actables.Add(a);
+
+        Actable go = new Actable("east");
+        go.description = "Beyond the demolished fence is a stone path running north-south";
+        go.AddAction(new Move("\nYou slither onwards like death in the night, despite the high noon sun" +
+        "\nYour proud white stripe threatening to expose your position to the no one around to see it" +
+        "\nYou have arrived on the path", this, rooms[1]));
+
+        a = new Actable("fence");
+        a.description =
+        "\nThe old fence buckles and groans under its own weight" +
+        "\nSeveral poiunts are nearly rusted through"+
+        "\nYour powerful maw should make short work of its crude contruction";
+        a.AddAction(new Eat("\nThe fence crumbles before your mighty white fangs" +
+        "\nThe way east is clear", rooms[0], go));
+        rooms[0].actables.Add(a);
+            
+
+    //stone path
+        a = new Actable("thistle");
+        a.description = "\nThe prickly green leaves remind you of your forfeit kingdom" +
+        "\nyou think to mourn, but steel your resolve.";
+        a.AddAction(new Eat("\nThe thistle is so completely and thoroughly emancipated from existance that one could think that it never existed in the first place" +
+        "\nYour sippling sinew surges with ancient power, the universe seems to cower in your precense" +
+        "\nNothing can keep you from your dark desires"));
+        rooms[1].actables.Add(a);
+
+        a = new Actable ("west");
+        a.description = "\nThe cell you just escaped from" +
+        "\nOnly a fool would return to captivity alive";
+        a.AddAction(new Move("\nYou saunter back into the damp relic of your oppression like a stonebrain donkey butt", this, rooms[0]));
+        rooms[1].actables.Add(a);
     }
 }

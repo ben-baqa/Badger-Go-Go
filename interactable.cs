@@ -5,31 +5,81 @@ public class Actable : Describable{
     private List<Act> actions;
 
     public Actable(string n){
-        name = n;
+        name.Add(n);
         actions = new List<Act>();
     }
 
     public void AddAction(Act action){
         actions.Add(action);
     }
+
+    public bool check(string[] s){
+        foreach(Act a in actions){
+            if(a.check(Alias.reduce(s[0])))
+                return true;
+        }
+        return false;
+    }
 }
 
 public class Act{
-    private string prompt, output;
-    private System.Action onTrigger;
+    protected string prompt, output;
+    protected bool basic = true;
+    protected Room room;
+    protected Actable addOnTrigger;
 
-    public Act(string i, string o, System.Action t = null){
+    public Act(string i, string o, Room r, Actable a){
         prompt = i;
         output = o;
-        onTrigger = t;
+        room = r;
+        addOnTrigger = a;
+        basic = false;
     }
 
-    public bool check(string input){
+    public Act(string i, string o){
+        prompt = i;
+        output = o;
+    }
+
+    public Act(){}
+
+    public virtual bool check(string input){
         if(input != prompt)
             return false;
         Console.WriteLine(output);
-        if(onTrigger != null)
-            onTrigger();
+        if(!basic)
+            room.actables.Add(addOnTrigger);
+        return true;
+    }
+}
+
+public class Eat: Act{
+    public Eat(string o, Room r, Actable a){ output = o; room = r; addOnTrigger = a; basic = false; }
+
+    public Eat(string o){ output = o; }
+
+    public override bool check(string input){
+        if(input != "eat")
+            return false;
+
+        Console.WriteLine(output);
+        if(!basic)
+            room.actables.Add(addOnTrigger);
+        return true;
+    }
+}
+
+public class Move: Act{
+    private Game game;
+
+    public Move(string o, Game g, Room r){ output = o; game = g; room = r; }
+
+    public override bool check(string input){
+        if(input != "go")
+            return false;
+        
+        Console.WriteLine(output);
+        game.room = room;
         return true;
     }
 }

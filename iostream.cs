@@ -4,6 +4,7 @@ namespace IOStream{
         public static OutStream operator -(OutStream o, string s){ Console.Write(s); return o; }
         public static OutStream operator -(OutStream o, int i){ Console.Write(i); return o; }
         public static OutStream operator +(OutStream o, string s){ Console.WriteLine(s); return o; }
+        public static OutStream operator +(OutStream o, string[] s){ foreach(string i in s) Console.WriteLine(i); return o; }
         public static OutStream operator +(OutStream o, int i){ Console.WriteLine(i); return o; }
         public static implicit operator OutStream(int i){ return new OutStream(); }
     }
