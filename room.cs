@@ -33,6 +33,10 @@ public class Room : Describable{
         actables = new List<Actable>();
     }
 
+    public void Add(Actable a){
+        actables.Add(a);
+    }
+
     public bool check(string[] s){
         foreach(Actable a in actables){
             if(a == s[1])

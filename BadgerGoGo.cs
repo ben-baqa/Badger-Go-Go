@@ -86,8 +86,28 @@ public class Game{
         "\nAlong the path are several thistles";
         rooms.Add(r);
 
+        r = new Room();
+        r.description =
+        "\n";
+        rooms.Add(r);
 
-    //starting cage
+        r = new Room();
+        r.description =
+        "\n";
+        rooms.Add(r);
+
+        r = new Room();
+        r.description =
+        "\n";
+        rooms.Add(r);
+
+        r = new Room();
+        r.description =
+        "\n";
+        rooms.Add(r);
+
+
+    //starting cage [0]
         Actable a = new Actable("bowl");
         a.description = 
         "\nThe small metal bowl holds a measly amount of old water," +
@@ -114,7 +134,7 @@ public class Game{
         rooms[0].actables.Add(a);
             
 
-    //stone path
+    //stone path [1]
         a = new Actable("thistle");
         a.description = "\nThe prickly green leaves remind you of your forfeit kingdom" +
         "\nyou think to mourn, but steel your resolve.";
@@ -128,5 +148,86 @@ public class Game{
         "\nOnly a fool would return to captivity alive";
         a.AddAction(new Move("\nYou saunter back into the damp relic of your oppression like a stonebrain donkey butt", this, rooms[0]));
         rooms[1].actables.Add(a);
+
+        a = new Actable("north");
+        a.description =
+        "\noffice";
+        a.AddAction(new Move("", this, rooms[4]));
+        rooms[1].Add(a);
+
+        a = new Actable("south");
+        a.description =
+        "\nminks";
+        a.AddAction(new Move("", this, rooms[2]));
+        rooms[1].Add(a);
+
+
+    //southern cages [2]
+
+
+        a = new Actable("north");
+        a.description =
+        "\npath";
+        a.AddAction(new Move("", this, rooms[1]));
+        rooms[2].Add(a);
+
+        a = new Actable("south");
+        a.description =
+        "\npeacock";
+        a.AddAction(new Move("", this, rooms[3]));
+        rooms[2].Add(a);
+
+
+    //peacock yard [3]
+        a = new Actable("peacock");
+        a.description =
+        "\n";
+        a.AddAction(new Eat(""));
+
+        a = new Actable("north");
+        a.description =
+        "\nminks";
+        a.AddAction(new Move("", this, rooms[2]));
+        rooms[3].Add(a);
+
+
+    //office [4]
+
+
+        a = new Actable("north");
+        a.description =
+        "\ngate";
+        a.AddAction(new Move("", this, rooms[5]));
+        rooms[4].Add(a);
+        
+        a = new Actable("south");
+        a.description =
+        "\npath";
+        a.AddAction(new Move("", this, rooms[1]));
+        rooms[4].Add(a);
+
+
+    //zoo gate [5]
+
+
+        a = new Actable("north");
+        a.description =
+        "\nCrisp air wafts from beyond the gate"+
+        "\nWhispering echoes of your glorious past from beyond the rigid structures of this hellish prison";
+        a.AddAction(new Move("\nFresh wet earth in the distance beckons you to freedom,"+
+        "\nYou take a step onwards, feeling the rocky pavement beneath your might paw,"+
+        "\n\nA flash of light...\n\nA blaring horn...\n\nThe crushing weight of black rubber tires tearing into your ample frame..."+
+        "\n\n\nAs if you could be so easily defeated by such a measly contraption!"+
+        "\nIn a single swipe, you rip the car in half, then swallow each half whole"+
+        "\nThe earth quakes at your feet as you march off to your new life", this, rooms[3]));
+        rooms[5].Add(a);
+        
+        a = new Actable("south");
+        a.description =
+        "\noffice";
+        a.AddAction(new Move("", this, rooms[4]));
+        rooms[5].Add(a);
+
+        room = rooms[0];
     }
 }

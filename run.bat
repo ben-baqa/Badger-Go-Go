@@ -1,3 +1,3 @@
-cls; echo "$([char]27)[3J"
+cls
 csc *.cs -nologo
 BadgerGoGo.exe
