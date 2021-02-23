@@ -74,12 +74,28 @@ public class Move: Act{
 
     public Move(string o, Game g, Room r){ output = o; game = g; room = r; }
 
+    public Move(){}
+
     public override bool check(string input){
         if(input != "go")
             return false;
         
         Console.WriteLine(output);
         game.room = room;
+        return true;
+    }
+}
+
+public class LastMove: Move{
+
+    public LastMove(string o){ output = o; }
+
+    public override bool check(string input){
+        if(input != "go")
+            return false;
+        
+        Console.WriteLine(output);
+        Environment.Exit(0);
         return true;
     }
 }
