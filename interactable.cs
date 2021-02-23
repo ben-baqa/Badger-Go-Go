@@ -62,7 +62,10 @@ public class Eat: Act{
         if(input != "eat")
             return false;
 
-        Console.WriteLine(output);
+        OutStream o = new OutStream();
+        o += output;
+        o.WriteBuffer();
+
         if(!basic)
             room.actables.Add(addOnTrigger);
         return true;
@@ -80,7 +83,10 @@ public class Move: Act{
         if(input != "go")
             return false;
         
-        Console.WriteLine(output);
+        OutStream o = new OutStream();
+        o += output;
+        o.WriteBuffer();
+
         game.room = room;
         return true;
     }
@@ -94,7 +100,10 @@ public class LastMove: Move{
         if(input != "go")
             return false;
         
-        Console.WriteLine(output);
+        OutStream o = new OutStream();
+        o += output;
+        o.WriteBuffer();
+
         Environment.Exit(0);
         return true;
     }

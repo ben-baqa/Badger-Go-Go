@@ -33,7 +33,8 @@ public class Game{
 
         //main loop
         while(true){
-            o += "---------------------------------------------------------------------------------------";
+            o += "----------------------------------------------";
+            o.WriteBuffer();
             input = +i;
             input = input.ToLower();
 
@@ -55,9 +56,7 @@ public class Game{
                 else
                     o += room.look(splitI[1]);
             }
-            else if(splitI.Length == 2 && room.check(splitI))
-                o += "";
-            else
+            else if(!(splitI.Length == 2 && room.check(splitI)))
                 o += "\nInvalid Input, use [help] to get help";
         }
         return 0;
@@ -70,6 +69,7 @@ public class Game{
         "\nTheir putrid stench coats the air of this humiliating prison" +
         "\nOnce a king amongst badgers, you were caught off guard by these ingrates" +
         "\nYou thirst for vangence";
+        
 
     //room definitions
         Room r = new Room();
@@ -202,7 +202,9 @@ public class Game{
         "\nAn open feild of lush green grass open up to the south" +
         "\nThough walled, the field is somewhat peaceful" +
         "\nA putrid squak interupts your contemplation as you notice the pecoacks roaming the lawn";
-        a.AddAction(new Move("", this, rooms[3]));
+        a.AddAction(new Move("\nThe path ends," +
+        "\nGiving way to fertile earth, coated cleany in luch grasses" +
+        "\nA rude bird sqeaks before you", this, rooms[3]));
         rooms[2].Add(a);
 
 
@@ -213,7 +215,8 @@ public class Game{
         "\nWhat a monarch!" +
         "\nA petty lark coated in golden nothings";
         a.AddAction(new Eat("\nYou devour the peacock" +
-        "\nChocked by the flaky nothings"));
+        "\nChoked by the flaky nothings" +
+        "\nThe bird's meager frame provides little sustenence"));
         rooms[3].Add(a);
 
         a = new Actable("north");
@@ -281,5 +284,6 @@ public class Game{
         rooms[5].Add(a);
 
         room = rooms[0];
+        o.WriteBuffer();
     }
 }
