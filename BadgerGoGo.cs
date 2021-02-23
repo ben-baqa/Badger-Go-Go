@@ -88,22 +88,26 @@ public class Game{
 
         r = new Room();
         r.description =
-        "\n";
+        "\nThe path has continued south" +
+        "\nJust off the path lies a small cage holding minks" +
+        "\nTo the south is a yard, where you can make out the forms of several large blue green birds";
         rooms.Add(r);
 
         r = new Room();
         r.description =
-        "\n";
+        "\nYou stand in a small open field, walled on all sides but the north from which you came" +
+        "\nThere are several peacocks";
         rooms.Add(r);
 
         r = new Room();
         r.description =
-        "\n";
+        "\nYou are sitting in a human structure";
         rooms.Add(r);
 
         r = new Room();
         r.description =
-        "\n";
+        "\nA massive Gate lies before you to the north" +
+        "\n the only remaining obstacle between you and succulent freedom";
         rooms.Add(r);
 
 
